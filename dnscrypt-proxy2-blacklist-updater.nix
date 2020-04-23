@@ -38,7 +38,7 @@ python3Packages.buildPythonApplication rec {
     description = "A tool that can be added to crontab for automatically updating dnscrypt-proxy2 blacklists";
     license = licenses.isc;
     homepage = "";
-    maintainers = with maintainers; [ ssosik ];
+    maintainers = with maintainers; [ "ssosik" ];
     platforms = with platforms; unix;
   };
 }
