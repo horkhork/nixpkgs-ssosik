@@ -6,7 +6,7 @@ let
   callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
   self = {
-    execpermfix = callPackage ./execpermfix.nix {};
+    dnscrypt-proxy2-blacklist-updater = callPackage ./dnscrypt-proxy2-blacklist-updater { };
   };
 in
 self
