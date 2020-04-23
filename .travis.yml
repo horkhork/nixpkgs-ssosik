@@ -16,7 +16,7 @@ jobs:
       deploy:
         provider: pages
         skip-cleanup: true
-        github-token: "$GITHUB_TOKEN"
+        github-token: "FOOO"
         local_dir: _output
         target-branch: gh-pages
         on:
