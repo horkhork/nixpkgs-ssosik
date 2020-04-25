@@ -16,7 +16,7 @@ let
       pname = "dnscrypt-proxy2-blacklist-updater";
       version = "1.0";
 
-      src = builtins.fetchFromGitHub {
+      src = pkgs.fetchFromGitHub {
         owner = "jedisct1";
         repo = "dnscrypt-proxy";
         rev = version;
