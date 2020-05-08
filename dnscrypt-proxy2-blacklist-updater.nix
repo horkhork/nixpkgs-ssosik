@@ -28,25 +28,39 @@
    };
  
    config = lib.mkIf cfg.enable {
-     #systemd.services.ircSession = {
-     #  wantedBy = [ "multi-user.target" ]; 
-     #  after = [ "network.target" ];
-     #  description = "Start the irc client of username.";
-     #  serviceConfig = {
-     #    Type = "forking";
-     #    User = "${cfg.user}";
-     #    ExecStart = ''${pkgs.screen}/bin/screen -dmS irc ${pkgs.irssi}/bin/irssi'';         
-     #    ExecStop = ''${pkgs.screen}/bin/screen -S irc -X quit'';
-     #  };
-     #};
-
-     services.cron = {
-       enable = true;
-       systemCronJobs = [
-         "0 0 * * *      ${cfg.user}    ${updater}/bin/generate-domains-blacklist.py -i -c ${updater}/domains-blacklist.conf -r ${updater}/domains-time-restricted.txt -w ${updater}/domains-whitelist.txt > /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt"
-       ];
+     systemd = {
+       timers.dnscrypt-proxy2-blacklist-updater = {
+         description = "Make the dnscrypt-proxy2-blacklist-updater a periodic job";
+         wantedBy = [ "multi-user.target" ];
+         partOf = [ "dnscrypt-proxy2-blacklist-updater.service" ];
+         timerConfig = {
+           OnCalendar = "00:00";
+           #OnCalendar = "minutely";
+           Persistent = true;
+           Unit = "dnscrypt-proxy2-blacklist-updater.service";
+         };
+       };
+       services.dnscrypt-proxy2-blacklist-updater = {
+         description = "Oneshot task to update the dnscrypt-proxy2 blacklist data";
+         after = [ "network.target" ];
+         wantedBy = [ "multi-user.target" ];
+         requiredBy = [ "dnscrypt-proxy2.service" ];
+         serviceConfig = {
+           Type = "oneshot";
+           User = "${cfg.user}";
+           #WorkingDirectory = "${updater}";
+         };
+         script = ''
+           echo "Start Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
+           ${updater}/bin/generate-domains-blacklist.py -i -c \
+             ${updater}/domains-blacklist.conf -r \
+             ${updater}/domains-time-restricted.txt -w \
+             ${updater}/domains-whitelist.txt > \
+             /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
+           systemctl restart dnscrypt-proxy2.service
+           echo "Done Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
+         '';
+       };
      };
- 
-     #environment.systemPackages = [ pkgs.dnscrypt-proxy2 pkgs.dnscrypt-proxy2-blacklist-updater ];
    };
  }
