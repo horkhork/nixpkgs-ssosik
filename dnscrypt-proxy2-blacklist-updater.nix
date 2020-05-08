@@ -48,14 +48,14 @@
          serviceConfig = {
            Type = "oneshot";
            User = "${cfg.user}";
-           #WorkingDirectory = "${updater}";
+           WorkingDirectory = "${updater}";
          };
          script = ''
            echo "Start Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
-           ${updater}/bin/generate-domains-blacklist.py -i -c \
-             ${updater}/domains-blacklist.conf -r \
-             ${updater}/domains-time-restricted.txt -w \
-             ${updater}/domains-whitelist.txt > \
+           bin/generate-domains-blacklist.py -i -c \
+             domains-blacklist.conf -r \
+             domains-time-restricted.txt -w \
+             domains-whitelist.txt > \
              /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
            systemctl restart dnscrypt-proxy2.service
            echo "Done Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
