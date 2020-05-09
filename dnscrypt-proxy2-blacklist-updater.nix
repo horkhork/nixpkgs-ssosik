@@ -5,7 +5,12 @@
 
    cfg = config.services.dnscrypt-proxy2-blacklist-updater;
 
-   blacklist-sources = pkgs.writeTextFile{name="blacklist-sources"; text=lib.concatMapStringsSep "\n" (x: x) cfg.domains-blacklist;};
+   blacklist-sources = if builtins.length cfg.domains-blacklist > 0
+     then pkgs.writeTextFile {
+       name="blacklist-sources";
+       text=lib.concatMapStringsSep "\n" (x: x) cfg.domains-blacklist;
+     }
+     else "${updater}/domains-blacklist.conf";
 
  in
  
