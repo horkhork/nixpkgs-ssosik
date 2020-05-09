@@ -19,11 +19,22 @@
  
        user = lib.mkOption {
          default = "root";
-         type = with lib.types; uniq string;
+         type = with lib.types; uniq str;
          description = ''
            Name of the user.
          '';
        };
+
+       domains-blacklist = lib.mkOption {
+         default = [];
+         type = with lib.types; listOf str;
+         description = ''
+           List of all sources of blacklists. If not specified, defaults to what
+           is in the git repo.
+         '';
+       };
+
+
      };
    };
  
@@ -53,10 +64,10 @@
          };
          script = ''
            echo "Start Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
-           bin/generate-domains-blacklist.py -i -c \
-             domains-blacklist.conf -r \
-             domains-time-restricted.txt -w \
-             domains-whitelist.txt > \
+           bin/generate-domains-blacklist.py -i \
+             -c domains-blacklist.conf \
+             -r domains-time-restricted.txt \
+             -w domains-whitelist.txt > \
              /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
            systemctl restart dnscrypt-proxy2.service
            echo "Done Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
