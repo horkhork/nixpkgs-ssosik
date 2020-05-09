@@ -31,19 +31,20 @@
      systemd = {
        timers.dnscrypt-proxy2-blacklist-updater = {
          description = "Make the dnscrypt-proxy2-blacklist-updater a periodic job";
-         wantedBy = [ "multi-user.target" ];
+         before = [ "dnscrypt-proxy2" ];
+         wantedBy = [ "basic.target" ];
          partOf = [ "dnscrypt-proxy2-blacklist-updater.service" ];
          timerConfig = {
-           OnCalendar = "00:00";
-           #OnCalendar = "minutely";
-           Persistent = true;
+           OnCalendar = "daily";
+           OnBootSec = 30;
            Unit = "dnscrypt-proxy2-blacklist-updater.service";
          };
        };
        services.dnscrypt-proxy2-blacklist-updater = {
          description = "Oneshot task to update the dnscrypt-proxy2 blacklist data";
          after = [ "network.target" ];
-         wantedBy = [ "multi-user.target" ];
+         before = [ "dnscrypt-proxy2" ];
+         wantedBy = [ "basic.target" ];
          requiredBy = [ "dnscrypt-proxy2.service" ];
          serviceConfig = {
            Type = "oneshot";
