@@ -4,6 +4,12 @@
    updater = pkgs.callPackage ./default.nix {};
 
    cfg = config.services.dnscrypt-proxy2-blacklist-updater;
+
+   blacklist-sources = pkgs.writeText "blacklist-sources"
+     ''
+     Contents of File
+     '';
+
  in
  
  {
@@ -52,6 +58,9 @@
          };
        };
        services.dnscrypt-proxy2-blacklist-updater = {
+         preStart = ''
+           ln -sfv ${blacklist-sources} /var/lib/dnscrypt-proxy2/blacklist-sources.txt
+         '';
          description = "Oneshot task to update the dnscrypt-proxy2 blacklist data";
          after = [ "network.target" ];
          before = [ "dnscrypt-proxy2" ];
