@@ -5,12 +5,19 @@
 
    cfg = config.services.dnscrypt-proxy2-blacklist-updater;
 
-   blacklist-sources = if builtins.length cfg.domains-blacklist > 0
+   blacklist-sources = if builtins.length cfg.blacklist-sources > 0
      then pkgs.writeTextFile {
        name="blacklist-sources";
-       text=lib.concatMapStringsSep "\n" (x: x) cfg.domains-blacklist;
+       text=lib.concatMapStrings (x: x + "\n") cfg.blacklist-sources;
      }
      else "${updater}/domains-blacklist.conf";
+
+   whitelisted-domains = if builtins.length cfg.whitelisted-domains > 0
+     then pkgs.writeTextFile {
+       name="whitelist-sources";
+       text=lib.concatMapStrings (x: x + "\n") cfg.whitelisted-domains;
+     }
+     else "${updater}/domains-whitelist.txt";
 
  in
  
@@ -33,7 +40,7 @@
          '';
        };
 
-       domains-blacklist = lib.mkOption {
+       blacklist-sources = lib.mkOption {
          default = [];
          type = with lib.types; listOf str;
          description = ''
@@ -42,6 +49,14 @@
          '';
        };
 
+       whitelisted-domains = lib.mkOption {
+         default = [];
+         type = with lib.types; listOf str;
+         description = ''
+           List of all domains to whitelist. If not specified, defaults to what
+           is in the git repo.
+         '';
+       };
 
      };
    };
@@ -60,9 +75,6 @@
          };
        };
        services.dnscrypt-proxy2-blacklist-updater = {
-         preStart = ''
-           ln -sfv ${blacklist-sources} /var/lib/dnscrypt-proxy2/blacklist-sources.txt
-         '';
          description = "Oneshot task to update the dnscrypt-proxy2 blacklist data";
          after = [ "network.target" ];
          before = [ "dnscrypt-proxy2" ];
@@ -76,9 +88,9 @@
          script = ''
            echo "Start Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
            bin/generate-domains-blacklist.py -i \
-             -c domains-blacklist.conf \
-             -r domains-time-restricted.txt \
-             -w domains-whitelist.txt > \
+             -c ${blacklist-sources} \
+             -w ${whitelisted-domains} \
+             -r domains-time-restricted.txt > \
              /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
            systemctl restart dnscrypt-proxy2.service
            echo "Done Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
