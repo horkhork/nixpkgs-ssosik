@@ -5,10 +5,7 @@
 
    cfg = config.services.dnscrypt-proxy2-blacklist-updater;
 
-   blacklist-sources = pkgs.writeText "blacklist-sources"
-     ''
-     Contents of File
-     '';
+   blacklist-sources = pkgs.writeTextFile{name="blacklist-sources"; text=lib.concatMapStringsSep "\n" (x: x) cfg.domains-blacklist;};
 
  in
  
