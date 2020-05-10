@@ -77,7 +77,6 @@
        services.dnscrypt-proxy2-blacklist-updater = {
          description = "Oneshot task to update the dnscrypt-proxy2 blacklist data";
          after = [ "network.target" ];
-         before = [ "dnscrypt-proxy2" ];
          wantedBy = [ "basic.target" ];
          requiredBy = [ "dnscrypt-proxy2.service" ];
          serviceConfig = {
