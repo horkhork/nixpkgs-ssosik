@@ -85,6 +85,7 @@
            WorkingDirectory = "${updater}";
          };
          script = ''
+           mkdir -p /var/lib/dnscrypt-proxy2
            echo "Start Time: $(date)" >> /var/lib/dnscrypt-proxy2/blacklist-update.txt
            bin/generate-domains-blacklist.py -i \
              -c ${blacklist-sources} \
