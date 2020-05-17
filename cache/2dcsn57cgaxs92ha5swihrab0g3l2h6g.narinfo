@@ -1,0 +1,10 @@
+StorePath: /nix/store/2dcsn57cgaxs92ha5swihrab0g3l2h6g-python3-3.7.7
+URL: nar/01w8zpvg14fkzykhqraqkr77j149xz31lgwidd3hzvrkk63nhl60.nar.xz
+Compression: xz
+FileHash: sha256:01w8zpvg14fkzykhqraqkr77j149xz31lgwidd3hzvrkk63nhl60
+FileSize: 10514128
+NarHash: sha256:0icpq8nzhsg9v8ynyfjsgbc07v5403vjzs7zngrddqwjv6r21hli
+NarSize: 61036568
+References: 26nv6yv5mb8y8w8fk7ikx4p1vvyjz23i-gdbm-1.18.1 2765gcl7nip27s125fsrpiiwd4d60vzr-expat-2.2.8 2dcsn57cgaxs92ha5swihrab0g3l2h6g-python3-3.7.7 7i9rqnwh3m53z5a4md9sdgk1fdgk7cw4-bzip2-1.0.6.0.1 81wybawvkr95c7j8gj5ab3y740mq1fli-bash-4.4-p23 a6sbfdmqnw16i0giiv2dnwfg83gznnfj-zlib-1.2.11 b9yc1faqr159pwbrg9kabhl4zkpnk2v5-openssl-1.1.1g gv5yhri5rp7sqdxa78aqc59ivyza059q-xz-5.2.5 j3005jdd48vhhm1n8jvznix7fayx01np-ncurses-6.2 k4lyqnhks8lihpvzklayh6b37r5krgpq-sqlite-3.31.1 kc0gcjma8p5azpyqyl2xqbl51ic5yk0s-libffi-3.3 nwsn18fysga1n5s0bj4jp4wfwvlbx8b1-glibc-2.30 pz13f7rm84sqzpg1mnh3viz4d9sdzs6z-readline-6.3p08
+Deriver: swdyginpnwd5np710rfd5cbgwqrhda7d-python3-3.7.7.drv
+Sig: cache.nixos.org-1:SGn1c+s2tsSUii2Wb/DlufKLFP5qITiXBxHHkaJ+L/iUWM9yXb+WByHtnxi2TEvtXrONzUvWLmoH5Ea65C4aAg==

@@ -1,0 +1,10 @@
+StorePath: /nix/store/8nlyyyg0wfw58zn8g2867hn71ap6l0sf-python3.7-dnscrypt-proxy2-blacklist-updater-1.0
+URL: nar/12dan7nyg43rbpf95kcjx48wpnw4nmgf7fah2r3q8xrjq4sy44ph.nar.xz
+Compression: xz
+FileHash: sha256:12dan7nyg43rbpf95kcjx48wpnw4nmgf7fah2r3q8xrjq4sy44ph
+FileSize: 4812
+NarHash: sha256:0ai8548gv6wy0wcgq7cm60xmvrq9kvwsdzsd33rh2w8cy75prhny
+NarSize: 17632
+References: 2dcsn57cgaxs92ha5swihrab0g3l2h6g-python3-3.7.7 81wybawvkr95c7j8gj5ab3y740mq1fli-bash-4.4-p23 8nlyyyg0wfw58zn8g2867hn71ap6l0sf-python3.7-dnscrypt-proxy2-blacklist-updater-1.0
+Deriver: 33nayl39xykx0y9a94gyxxzdz80m9561-python3.7-dnscrypt-proxy2-blacklist-updater-1.0.drv
+Sig: horkhork:X4G7gfrRutonDUvWIzNUYtQ+39z2NANJIMNp6Zt1RoOfrwrAsDVMAAQeWPPdDhYw2Y828sMyUVX9wXMljU5wAg==
